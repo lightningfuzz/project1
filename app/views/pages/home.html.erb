@@ -1,2 +1,19 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<h1>Michael Santer</h1>
+
+<table border="0">
+<tr>
+	<th>Project Name</th><th>Description</th><th>URL</th>
+	</tr>
+
+	<%PROJECTS.each do |project, details|%>
+	<tr>
+	<td><%=project%></td>
+	<td><%=details['description']%></td>
+	<td><%=details['url']%></td>
+</tr>
+<%end%>
+
+</tr>
+
+</table>
+
