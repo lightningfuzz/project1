@@ -9,7 +9,8 @@
 	<tr>
 	<td><%=project%></td>
 	<td><%=details['description']%></td>
-	<td><%=details['url']%></td>
+	<% url = details['url'] %>
+	<td><a href=<%=url%>><%=url%></a></td>
 </tr>
 <%end%>
 
