@@ -2,12 +2,11 @@
 // # All this logic will automatically be available in application.js.
 // # You can use CoffeeScript in this file: http://coffeescript.org/
 
-months = ["January", "February", "March", "April", "May", "June",
+function createCal(){
+	months = ["January", "February", "March", "April", "May", "June",
 			"July", "August", "September", "October", "November", "December"];
-
-
-$(document).ready(function(){
 	date = new Date();
+	
 	updateUI(date);
 
 	$('#back-year').click(function(){
@@ -29,7 +28,7 @@ $(document).ready(function(){
 		date = new Date(date.getFullYear() + 1, date.getMonth());
 		updateUI(date);
 	})
-});
+}
 
 function updateUI(date){
 	$('tbody').empty();
