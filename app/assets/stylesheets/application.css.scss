@@ -9,7 +9,13 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require_tree .
+ * require_tree .
  */
 
 @import "bootstrap";
+
+body {
+  padding-top: 30px;
+  padding-left: 30px;
+  padding-right: 30px;
+}

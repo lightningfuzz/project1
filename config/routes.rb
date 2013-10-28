@@ -1,6 +1,8 @@
 Project1::Application.routes.draw do
+  get "calendar/show"
   get "pages/project_2"
   get "pages/home"
+  get "/calendar" => 'calendar#show'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
