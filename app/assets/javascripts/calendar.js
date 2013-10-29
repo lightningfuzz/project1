@@ -3,10 +3,11 @@
 // # You can use CoffeeScript in this file: http://coffeescript.org/
 
 function createCal(){
+	
 	months = ["January", "February", "March", "April", "May", "June",
 			"July", "August", "September", "October", "November", "December"];
 	date = new Date();
-	
+
 	updateUI(date);
 
 	$('#back-year').click(function(){
