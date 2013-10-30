@@ -9,7 +9,7 @@ function createCal(){
 	date = new Date();
 
 	$('#time').val('12:00pm');
-	
+
 	updateUI(date);
 
 	$('#back-year').click(function(){
@@ -58,6 +58,9 @@ function updateUI(date){
 		$('tbody tr:last-child').append($("<td><ul></ul></td>"));
 		$('tr:last-child td:last-child').toggleClass("dayOfMonth");
 		$('tr:last-child .dayOfMonth:last-child').html(day);
+		if((month == (new Date).getMonth() && day == (new Date).getDate())){
+			$('tr:last-child .dayOfMonth:last-child').css('background-color', '#D0DBDB');
+		}
 		date.setDate(++day);
 		dayOfWeek++;
 	}
