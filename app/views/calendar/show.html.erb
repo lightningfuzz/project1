@@ -4,8 +4,32 @@
 <script type="text/javascript">
 	$(document).ready(createCal);
 </script>
+<br><br>
 
-<table class="table table-bordered">
+<div>Select Time:</div>
+<select class="form-control" id="time">
+	<option>12:00am</option>
+	<option>12:30am</option>
+
+	<%(1..11).each do |time|%>
+	<option><%=time%>:00am</option>
+	<option><%=time%>:30am</option>
+	<%end%>
+
+	<option>12:00pm</option>
+	<option>12:30pm</option>
+
+	<%(1..11).each do |time|%>
+	<option><%=time%>:00pm</option>
+	<option><%=time%>:30pm</option>
+	<%end%>
+</select>
+
+<input type="text" class="form-control" id="description" placeholder="Enter Description">
+
+<br><br><br><br>
+
+<table class="table table-bordered calendar">
 	<thead>
 		<tr>
 			<th id="back-year"><<</th>

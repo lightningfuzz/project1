@@ -13,25 +13,37 @@ function createCal(){
 	$('#back-year').click(function(){
 		date = new Date(date.getFullYear() - 1, date.getMonth());
 		updateUI(date);
-	})
+	});
 
 	$('#back-month').click(function(){
 		date = new Date(date.getFullYear(), (date.getMonth()-1));
 		updateUI(date);
-	})
+	});
 
 	$('#forward-month').click(function(){
 		date = new Date(date.getFullYear(), (date.getMonth()+1));
 		updateUI(date);
-	})
+	});
 
 	$('#forward-year').click(function(){
 		date = new Date(date.getFullYear() + 1, date.getMonth());
 		updateUI(date);
-	})
+	});
+
+	$('.dayOfMonth').click(function(){
+		des = $("#description").val();
+		if(des != ""){
+			time = $("#time").val();
+			eventDes = time + " " + des;
+			$(this, "ul").append($("<li></li>").append(eventDes));
+		}
+		$('#description').val('');
+		$('#time').val('12:00pm');
+	});
 }
 
 function updateUI(date){
+	$('#time').val('12:00pm');
 	$('tbody').empty();
 	today = date.getDate();
 	month = date.getMonth();
@@ -52,8 +64,9 @@ function updateUI(date){
 			$('tbody').append($("<tr></tr>"));
 		}
 		day = date.getDate();
-		$('tbody tr:last-child').append($("<td></td>"));
-		$('tr:last-child td:last-child').html(day);
+		$('tbody tr:last-child').append($("<td><ul></ul></td>"));
+		$('tr:last-child td:last-child').toggleClass("dayOfMonth");
+		$('tr:last-child .dayOfMonth:last-child').html(day);
 		date.setDate(++day);
 		dayOfWeek++;
 	}
@@ -63,7 +76,4 @@ function updateUI(date){
 	for(dayOfWeek; dayOfWeek<7 && dayOfWeek>0; dayOfWeek++){
 		$('tbody tr:last-child').append($("<td></td>"));
 	}
-
-
 }
-
