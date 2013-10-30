@@ -13,3 +13,9 @@
 	width: 7em;
 	height: 4em;
 }
+
+#back-month, #back-year,
+#forward-month, #forward-year{
+	cursor: pointer;
+	color: #2A5889;
+}
