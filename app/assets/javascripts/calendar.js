@@ -30,16 +30,6 @@ function createCal(){
 		updateUI(date);
 	});
 
-	$('.dayOfMonth').click(function(){
-		des = $("#description").val();
-		if(des != ""){
-			time = $("#time").val();
-			eventDes = time + " " + des;
-			$(this, "ul").append($("<li></li>").append(eventDes));
-		}
-		$('#description').val('');
-		$('#time').val('12:00pm');
-	});
 }
 
 function updateUI(date){
@@ -76,4 +66,15 @@ function updateUI(date){
 	for(dayOfWeek; dayOfWeek<7 && dayOfWeek>0; dayOfWeek++){
 		$('tbody tr:last-child').append($("<td></td>"));
 	}
+
+	$('.dayOfMonth').click(function(){
+		des = $("#description").val();
+		if(des != ""){
+			time = $("#time").val();
+			eventDes = time + " " + des;
+			$(this, "ul").append($("<li></li>").append(eventDes));
+		}
+		$('#description').val('');
+		$('#time').val('12:00pm');
+	});
 }
