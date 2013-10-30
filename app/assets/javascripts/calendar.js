@@ -8,6 +8,8 @@ function createCal(){
 			"July", "August", "September", "October", "November", "December"];
 	date = new Date();
 
+	$('#time').val('12:00pm');
+	
 	updateUI(date);
 
 	$('#back-year').click(function(){
@@ -33,7 +35,6 @@ function createCal(){
 }
 
 function updateUI(date){
-	$('#time').val('12:00pm');
 	$('tbody').empty();
 	today = date.getDate();
 	month = date.getMonth();
