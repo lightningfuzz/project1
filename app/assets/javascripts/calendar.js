@@ -6,6 +6,7 @@ function createCal(){
 	
 	months = ["January", "February", "March", "April", "May", "June",
 			"July", "August", "September", "October", "November", "December"];
+			
 	date = new Date();
 
 	$('#time').val('12:00pm');
