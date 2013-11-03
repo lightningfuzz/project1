@@ -62,6 +62,10 @@ function updateUI(date){
 		if((month == (new Date).getMonth() && day == (new Date).getDate())){
 			$('tr:last-child .dayOfMonth:last-child').css('background-color', '#D0DBDB');
 		}
+
+		//fillInAppointments(date);
+		//appointments = $.get("/appointments", {year: date.getFullYear(), month: date.getMonth});
+
 		date.setDate(++day);
 		dayOfWeek++;
 	}
@@ -72,14 +76,46 @@ function updateUI(date){
 		$('tbody tr:last-child').append($("<td></td>"));
 	}
 
+	//test get
+	$.get("/appointments.json", function(appointments){
+		alert('test');
+		alert(appointments[0].description);
+	});
+
+	//test post
+	$.post('/appointments', 
+		{appointment: 
+			{year: 2013, month: 10, day: 5, description: 'breakfast' }}
+		);
+
 	$('.dayOfMonth').click(function(){
 		des = $("#description").val();
 		if(des != ""){
 			time = $("#time").val();
 			eventDes = time + " " + des;
 			$(this, "ul").append($("<li></li>").append(eventDes));
+
 		}
 		$('#description').val('');
 		$('#time').val('12:00pm');
 	});
 }
+
+// function fillInAppointments(date){
+// 	$.get('appointments.json', function(appointments){
+// 		alert(appointments[0].description);
+// 	});
+	
+// 	// $.each(appointments, function(index, appointment){
+// 	// 	$('tr:last-child .dayOfMonth:last-child').append(appointment['description']);
+// 	// });
+// }
+
+
+
+
+
+
+
+
+

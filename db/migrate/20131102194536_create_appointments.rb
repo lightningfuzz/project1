@@ -1,11 +1,11 @@
 class CreateAppointments < ActiveRecord::Migration
   def change
     create_table :appointments do |t|
-      t.int :year
-      t.int :month
-      t.int :day
-      t.int :hour
-      t.int :minute
+      t.integer :year
+      t.integer :month
+      t.integer :day
+      t.integer :hour
+      t.integer :minute
       t.string :description
 
       t.timestamps
