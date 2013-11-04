@@ -101,9 +101,13 @@ function updateUI(date){
 			appointment = {'year': year, 'month': month, 'day': day, 'hour': hour,'minute': minute, 'description': des};
 
 			$.post('/appointments', appointment);
+			$('ul', this).append($('<li></li>').append($('#time').val() + ' ' + des).attr(
+				'data-hour',hour));
+
+			sortList(day);	
 			//updateUI(new Date(year, month));
-			$('ul').empty();
-			fillInAppointments(month,year);
+			//$('ul').empty();
+			//fillInAppointments(month,year);
 		}
 		$('#description').val('');
 		$('#time').val('12:00pm');
@@ -145,11 +149,22 @@ function fillInAppointments(month, year){
 
 			$('[data-day='+ appointment.day +'] ul').append(
 				$('<li></li>').append(hour + ':' + minute + timeOfDay
-					+ ' ' + appointment.description));
+					+ ' ' + appointment.description).attr('data-hour', appointment.hour));
+
 		});
 	});
-	
-	
+}
+
+function sortList(day){
+	list = $('[data-day='+ day +'] ul li');
+	list.sort(function(a,b){
+		compA = Number($(a).attr('data-hour'));
+		compB = Number($(b).attr('data-hour'));
+		if (compA > compB) return 1;
+		if (compA < compB) return -1;
+		return 0;
+	});
+	$('[data-day='+ day +'] ul').append(list);
 }
 
 
