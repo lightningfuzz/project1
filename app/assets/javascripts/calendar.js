@@ -101,7 +101,9 @@ function updateUI(date){
 			appointment = {'year': year, 'month': month, 'day': day, 'hour': hour,'minute': minute, 'description': des};
 
 			$.post('/appointments', appointment);
-			updateUI(new Date(year, month));
+			//updateUI(new Date(year, month));
+			$('ul').empty();
+			fillInAppointments(month,year);
 		}
 		$('#description').val('');
 		$('#time').val('12:00pm');
