@@ -56,14 +56,14 @@ function updateUI(date){
 			$('tbody').append($("<tr></tr>"));
 		}
 		day = date.getDate();
-		$('tbody tr:last-child').append($("<td><ul></ul></td>"));
-		$('tr:last-child td:last-child').toggleClass("dayOfMonth");
-		$('tr:last-child .dayOfMonth:last-child').html(day);
+		$('tbody tr:last-child').append($("<td></td>"));
+		//$('tr:last-child td:last-child').toggleClass("dayOfMonth");
+		$('tr:last-child td:last-child').attr('data-day', day)
+		$('tr:last-child [data-day]:last-child').append(day);
+		$('tr:last-child [data-day]:last-child').append('<ul></ul>');
 		if((month == (new Date).getMonth() && day == (new Date).getDate())){
-			$('tr:last-child .dayOfMonth:last-child').css('background-color', '#D0DBDB');
+			$('tr:last-child [data-day]:last-child').css('background-color', '#D0DBDB');
 		}
-
-		//fillInAppointments(date);
 		//appointments = $.get("/appointments", {year: date.getFullYear(), month: date.getMonth});
 
 		date.setDate(++day);
@@ -76,40 +76,79 @@ function updateUI(date){
 		$('tbody tr:last-child').append($("<td></td>"));
 	}
 
-	//test get
-	$.get("/appointments.json", function(appointments){
-		alert('test');
-		alert(appointments[0].description);
-	});
+	fillInAppointments(month, year);
 
 	//test post
-	$.post('/appointments', 
-		{appointment: 
-			{year: 2013, month: 10, day: 5, description: 'breakfast' }}
-		);
+	// appointment = {"year": 2013, "month": 10, "day": 5, "hour": 10, 
+	// 				"minute": 30, "description": "breakfast" };
+	// $.post('/appointments', appointment);
 
-	$('.dayOfMonth').click(function(){
+	$('[data-day]').click(function(){
 		des = $("#description").val();
 		if(des != ""){
-			time = $("#time").val();
-			eventDes = time + " " + des;
-			$(this, "ul").append($("<li></li>").append(eventDes));
+			time = ($("#time").val()).split(/:|am|pm/);
+			timeOfDay = ($("#time").val()).split(/\d+:\d\d/);
+			hour = Number(time[0]);
+			minute = Number(time[1]);
+			day = $(this).attr('data-day');
 
+			if (hour < 12 && timeOfDay[1] == 'pm'){
+				hour += 12;
+			}
+			if (hour == 12 && timeOfDay[1] == 'am'){
+				hour = 0;
+			}	
+			appointment = {'year': year, 'month': month, 'day': day, 'hour': hour,'minute': minute, 'description': des};
+
+			$.post('/appointments', appointment);
+			updateUI(new Date(year, month));
 		}
 		$('#description').val('');
 		$('#time').val('12:00pm');
 	});
 }
 
-// function fillInAppointments(date){
-// 	$.get('appointments.json', function(appointments){
-// 		alert(appointments[0].description);
-// 	});
+function fillInAppointments(month, year){
+	$.get('/appointments', {'month': month, 'year': year}, 
+		function(appointments){
+		$.each(appointments, function(index, appointment){
+
+			if(appointment.minute < 10){
+				minute = '0' + appointment.minute;
+			}
+			else{
+				minute = appointment.minute
+			}
+
+			switch (true){
+				case appointment.hour == 12:
+					hour = 12;
+					timeOfDay = 'pm';
+					break;
+				
+				case appointment.hour > 12:
+					hour = appointment.hour - 12;
+					timeOfDay = 'pm';
+					break;
+
+				case appointment.hour == 0:
+					hour = 12;
+					timeOfDay = 'am';
+					break;
+				
+				default:
+					hour = appointment.hour;
+					timeOfDay = 'am';
+			}
+
+			$('[data-day='+ appointment.day +'] ul').append(
+				$('<li></li>').append(hour + ':' + minute + timeOfDay
+					+ ' ' + appointment.description));
+		});
+	});
 	
-// 	// $.each(appointments, function(index, appointment){
-// 	// 	$('tr:last-child .dayOfMonth:last-child').append(appointment['description']);
-// 	// });
-// }
+	
+}
 
 
 
