@@ -3,7 +3,7 @@ class AppointmentsController < ApplicationController
 
 	#get /appointments
 	def index
-		@appointments = Appointment.all
+		#@appointments = Appointment.all
 		@appointments = Appointment.where(
 			year: params[:year], month: params[:month]).order(:hour, :minute).find(:all)
 		render json: @appointments
@@ -13,6 +13,12 @@ class AppointmentsController < ApplicationController
 	def create
 		@appointment = Appointment.create!(appointment_parms)
 		@appointment.save
+	end
+
+	# DELETE /users/1
+	def destroy
+		Appointment.delete(params[:id])
+		#@appointment.destroy
 	end
 
 	private

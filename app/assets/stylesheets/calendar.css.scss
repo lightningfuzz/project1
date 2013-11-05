@@ -10,7 +10,7 @@
 }
 
 .table-bordered td{
-	width: 7em;
+	width: 13em;
 	height: 4em;
 }
 
@@ -18,4 +18,16 @@
 #forward-month, #forward-year{
 	cursor: pointer;
 	color: #2A5889;
+}
+
+.del-button{
+	cursor: pointer;
+	display: none;
+	float: right;
+	a {color: red;}
+}
+
+[data-id]:hover div{
+	display: inline;
+
 }

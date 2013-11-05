@@ -33,6 +33,14 @@ function createCal(){
 		updateUI(date);
 	});
 
+	$('[data-day]').delegate('.del-button', 'click',function(e){
+		$.ajax({
+		  type: "DELETE",
+		  url: "/appointments/" + $(this).parent().attr('data-id'),
+		});
+		$(this).parent('li').remove();
+		e.stopPropagation();
+	});
 }
 
 function updateUI(date){
@@ -64,7 +72,6 @@ function updateUI(date){
 		if((month == (new Date).getMonth() && day == (new Date).getDate())){
 			$('tr:last-child [data-day]:last-child').css('background-color', '#D0DBDB');
 		}
-		//appointments = $.get("/appointments", {year: date.getFullYear(), month: date.getMonth});
 
 		date.setDate(++day);
 		dayOfWeek++;
@@ -78,12 +85,15 @@ function updateUI(date){
 
 	fillInAppointments(month, year);
 
+	//test delete
+	// $.ajax({
+	//   type: "DELETE",
+	//   url: "/appointments/1",
+	// });
 	//test post
-	// appointment = {"year": 2013, "month": 10, "day": 5, "hour": 10, 
-	// 				"minute": 30, "description": "breakfast" };
-	// $.post('/appointments', appointment);
+	
 
-	$('[data-day]').click(function(){
+	$('[data-day]').click(function(e){
 		des = $("#description").val();
 		if(des != ""){
 			time = ($("#time").val()).split(/:|am|pm/);
@@ -104,14 +114,15 @@ function updateUI(date){
 			$('ul', this).append($('<li></li>').append($('#time').val() + ' ' + des).attr(
 				'data-hour',hour));
 
-			sortList(day);	
-			//updateUI(new Date(year, month));
-			//$('ul').empty();
-			//fillInAppointments(month,year);
+			sortList(day);
 		}
+
 		$('#description').val('');
 		$('#time').val('12:00pm');
 	});
+
+
+
 }
 
 function fillInAppointments(month, year){
@@ -147,9 +158,11 @@ function fillInAppointments(month, year){
 					timeOfDay = 'am';
 			}
 
-			$('[data-day='+ appointment.day +'] ul').append(
+			temp = $('[data-day='+ appointment.day +'] ul').append(
 				$('<li></li>').append(hour + ':' + minute + timeOfDay
 					+ ' ' + appointment.description).attr('data-hour', appointment.hour));
+
+			$('li:last-child', temp).append("<div class='del-button'><a>x</a></div>").attr("data-id", appointment.id);
 
 		});
 	});
