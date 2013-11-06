@@ -13,6 +13,7 @@ class AppointmentsController < ApplicationController
 	def create
 		@appointment = Appointment.create!(appointment_parms)
 		@appointment.save
+		render json: @appointment
 	end
 
 	# DELETE /users/1

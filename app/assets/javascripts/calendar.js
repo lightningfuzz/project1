@@ -33,7 +33,7 @@ function createCal(){
 		updateUI(date);
 	});
 
-	$('[data-day]').delegate('.del-button', 'click',function(e){
+	$('table').delegate('.del-button', 'click',function(e){
 		$.ajax({
 		  type: "DELETE",
 		  url: "/appointments/" + $(this).parent().attr('data-id'),
@@ -85,17 +85,10 @@ function updateUI(date){
 
 	fillInAppointments(month, year);
 
-	//test delete
-	// $.ajax({
-	//   type: "DELETE",
-	//   url: "/appointments/1",
-	// });
-	//test post
-	
-
-	$('[data-day]').click(function(e){
+	$('tr').delegate('[data-day]','click',function(){
 		des = $("#description").val();
 		if(des != ""){
+			timeTemp = $('#time').val();
 			time = ($("#time").val()).split(/:|am|pm/);
 			timeOfDay = ($("#time").val()).split(/\d+:\d\d/);
 			hour = Number(time[0]);
@@ -109,12 +102,23 @@ function updateUI(date){
 				hour = 0;
 			}	
 			appointment = {'year': year, 'month': month, 'day': day, 'hour': hour,'minute': minute, 'description': des};
+			
+			$.post('/appointments', appointment, function(appoint){
 
-			$.post('/appointments', appointment);
-			$('ul', this).append($('<li></li>').append($('#time').val() + ' ' + des).attr(
-				'data-hour',hour));
+				temp = $('[data-day='+ appoint.day +'] ul').append($('<li></li>').append(timeTemp + ' ' + des).attr(
+					 	'data-hour',hour).attr('data-id', 0));
+				$('li:last-child', temp).append("<div class='del-button'><a>x</a></div>").attr("data-id", appoint.id);
+			});
+			// $('ul', this).append($('<li></li>').append($('#time').val() + ' ' + des).attr(
+			// 	'data-hour',hour).attr('data-id', 0));
 
-			sortList(day);
+			// $('li:last-child', this).append("<div class='del-button'><a>x</a></div>").attr("data-id", appointment.id);
+
+			setTimeout(function(){
+			  sortList(day);
+			}, 200);
+			
+			//alert('test');
 		}
 
 		$('#description').val('');
