@@ -1,0 +1,13 @@
+Michael Santer
+908250517
+http://sleepy-plains-7609.herokuapp.com
+
+I accidentally submitted my project3 document to this project4 turn it by accident. Didn’t notice until I went to turn this document in. I emailed you about it.
+
+Points of Interest:
+
+-I implemented the ability to delete appointments. When you hover your mouse over an appointment, a red ‘x’ will appear. 
+
+-Appointments sort into correct chronological order upon entry
+
+- Times appear in “am/pm” form, however, the database saves the data in “military” form (0-23). This just sounded more proper to me because it allows for reusability of the database schema.
